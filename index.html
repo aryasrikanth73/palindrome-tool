@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindrome Finder Tool - Discover Palindromic Words in Your Text</title>
+    
+    
+    <meta name="description" content="Use our Palindrome Finder Tool to identify palindromic words in any text. Simply paste a sentence or paragraph, and discover words that read the same forwards and backwards. Perfect for writers, language enthusiasts, and students!">
+    <meta name="keywords" content="palindrome finder, palindrome tool, find palindromic words, palindrome checker, palindrome examples, text analysis tool, language tool, palindrome detector">
+    <meta name="author" content="Your Name or Website Name">
+    
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <style>
+        body { padding: 20px; }
+        #result { margin-top: 20px; }
+        .highlight { color: #007bff; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="text-center my-4">
+            <h2 class="display-4">Palindrome Word Finder Tool</h2>
+            <p class="lead text-muted">
+                Discover the palindrome words hidden within your text! Just paste any sentence, paragraph, or word in the box below and see if there are any words that read the same forwards and backwards.
+            </p>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">What is a Palindrome?</h5>
+                <p class="card-text">
+                    A palindrome is a word, phrase, or sequence of characters that reads the same backward as forward. Famous examples include <span class="highlight">"madam"</span>, <span class="highlight">"level"</span>, and <span class="highlight">"radar"</span>. This tool helps you find such unique words in any text you enter.
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <textarea id="inputText" class="form-control" rows="5" placeholder="Enter your text here..."></textarea>
+            <button onclick="findPalindromes()" class="btn btn-primary btn-block mt-3">Submit</button>
+        </div>
+
+        <div id="result" class="alert alert-info mt-4" role="alert" style="display: none;">
+            
+        </div>
+    </div>
+
+    <script>
+        function findPalindromes() {
+            const inputText = document.getElementById("inputText").value;
+            const resultDiv = document.getElementById("result");
+
+            
+            resultDiv.style.display = "none";
+            resultDiv.innerHTML = "";
+
+            
+            const words = inputText.match(/\b\w+\b/g);
+            const palindromes = words ? words.filter(word => {
+                const lowerCaseWord = word.toLowerCase();
+                return lowerCaseWord.length > 1 && isNaN(lowerCaseWord) && 
+                       lowerCaseWord === lowerCaseWord.split('').reverse().join('');
+            }) : [];
+
+            
+            if (palindromes.length > 0) {
+                resultDiv.innerHTML = `<strong>Palindrome Words Found:</strong> ${palindromes.join(', ')}`;
+                resultDiv.classList.replace("alert-info", "alert-success");
+            } else {
+                resultDiv.innerHTML = "No palindrome words found.";
+                resultDiv.classList.replace("alert-success", "alert-info");
+            }
+
+            resultDiv.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
